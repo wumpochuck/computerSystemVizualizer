@@ -22,6 +22,18 @@ func _on_button_load_pressed():
 	var res = proverka()
 
 	print(res)
+	function()
+	
+	'''
+	var builder = $Builder
+	var block = Sprite2D.new()
+	block.texture = load('res://assets/block semidark.png')
+	block.position.x += 3.24 * 64
+	block.offset.x += 50
+	block.offset.y += 150
+	builder.add_child(block)
+	# 3.24
+	'''
 	'''
 	Написать проверку введённых массивов на интовые числа, в каждом массиве
 	должно быть по 8 floatовских чисел
@@ -60,3 +72,20 @@ func createGraph():
 	Эти переменные в виде строк будут потом отправляться в спрайт "Info"
 	
 	'''
+
+func logariphm():
+	return (-1 * log(randf())) / 0.52
+
+func function():
+	arr1 = []
+	for i in range(8):
+		arr1.append(logariphm())
+	
+	arr2 = []
+	for i in range(8):
+		arr2.append(logariphm())
+	
+	print(arr1)
+	print(arr2)
+	
+	

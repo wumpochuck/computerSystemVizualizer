@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://f2xccal3oc1w"]
+[gd_scene load_steps=11 format=3 uid="uid://f2xccal3oc1w"]
 
 [ext_resource type="Texture2D" uid="uid://nwnpmesoai6b" path="res://assets/bg.png" id="1_2nd0d"]
 [ext_resource type="Script" path="res://node_2d.gd" id="1_ssrr6"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ckn6tbhv8gblr" path="res://assets/IOwindow.png" id="6_kwluk"]
 [ext_resource type="Texture2D" uid="uid://cpgw1t05hgun3" path="res://assets/button square.png" id="7_dnlfk"]
 [ext_resource type="Texture2D" uid="uid://c0bvbweykmknh" path="res://assets/fliped IOwindow.png" id="8_mxo6d"]
+[ext_resource type="Texture2D" uid="uid://g12dq6wuq8x" path="res://assets/пунктир.png" id="10_lnbd3"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ssrr6")
@@ -150,9 +151,13 @@ texture = ExtResource("8_mxo6d")
 [node name="Builder" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 392.0
+offset_left = 448.0
 offset_top = 24.0
 offset_right = 1176.0
 offset_bottom = 472.0
+
+[node name="Пунктир" type="Sprite2D" parent="."]
+position = Vector2(656, 80)
+texture = ExtResource("10_lnbd3")
 
 [connection signal="pressed" from="ButtonLoad" to="." method="_on_button_load_pressed"]
