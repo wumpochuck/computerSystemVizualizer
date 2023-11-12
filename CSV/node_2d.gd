@@ -62,6 +62,10 @@ func proverka():
 	return true
 
 func createGraph():
+
+	
+	
+	
 	pass
 	'''
 	Создается главный слой, который потом удаляется кнопкой стереть
@@ -78,13 +82,12 @@ func logariphm():
 
 func function():
 	arr1 = []
-	for i in range(8):
-		arr1.append(logariphm())
-	
 	arr2 = []
 	for i in range(8):
-		arr2.append(logariphm())
+		arr1.append(snapped(logariphm(),0.001))
+		arr2.append(snapped(logariphm(),0.001))
 	
+	arr1.sort()
 	print(arr1)
 	print(arr2)
 	
