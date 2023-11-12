@@ -119,7 +119,7 @@ theme_override_font_sizes/font_size = 12
 placeholder_text = "Время
 прихода
 программ
-(макс. 8)"
+(8 чисел)"
 
 [node name="Input2" type="Sprite2D" parent="."]
 position = Vector2(238, 92)
@@ -147,7 +147,7 @@ theme_override_font_sizes/font_size = 12
 placeholder_text = "Время
 длит.
 программ
-(макс. 8)"
+(8 чисел)"
 
 [node name="ButtonClear" type="TextureButton" parent="."]
 offset_left = 200.0

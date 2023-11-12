@@ -75,11 +75,14 @@ func _on_button_clear_pressed():
 	var risovalka = $risovalka
 	while(risovalka.get_child(24)):
 		risovalka.get_child(24).free()
+	$Info/infotext.text = 'Заявок обработано: \nОбработаны: \nНеобработаны: \nПроцессор бездействовал:\n'
 	pass # Replace with function body.
 
 func proverka():
 	var count1 = 0
 	var count2 = 0
+	if arr1.size() != 8 or arr2.size() != 8:
+		return false
 	for ele in arr1:
 		count1 += 1
 		var ele1 = float(ele)
