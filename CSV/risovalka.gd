@@ -4,57 +4,111 @@ var zaebok = []
 var otkaz = []
 var vremya_prostoya
 const multiplier = 38.4 # Пикселей в 1й секунде
-const Yproc = 96-2 - 42.5# Пикселей
-const Ynak = 200-2 - 42.5
-const Yotk = 304-2 - 42.5
-const Ygood = 408-2 - 42.5
+const Yproc = 96+2 - 42.5# Пикселей
+const Ynak = 200+2 - 42.5
+const Yotk = 304+2 - 42.5
+const Ygood = 408+2 - 42.5
 # Высота блоков = 48 пикселей
 # 64 пикселя - 1 секунда
 # 0.067 3.633
-func draw_block(start,duration,kyda):
+var proc_time = 0
+var switcher = 1
+func draw_block(start,duration,kyda,index):
 	var block = Sprite2D.new()
-	block.texture = load('res://assets/xlel.png')
+	block.texture = load('res://assets/1243'+str(switcher)+'.png')
+	switcher = -switcher
 	block.centered = false
+	var blocktext = Label.new()
+	blocktext.text = str(index)
 	if(kyda == 'proc'):
 		block.position.x = start * multiplier
 		block.position.y = Yproc
-	block.scale.x = duration * multiplier
-	add_child(block)
-	if(kyda == 'nako'):
+
+		blocktext.position = Vector2(start*multiplier + 2,Yproc)
+		proc_time += start+duration
+		draw_lines(start+duration,'norm',index)
+		draw_lines(start,'proc',index)
+		
+	if(kyda == 'nako'): 
 		block.position.x = start * multiplier
 		block.position.y = Ynak
+		proc_time += duration
+		#draw_block(proc_time,duration,'proc',index)
+		draw_lines(start,'nako',index)
+		draw_lines(proc_time,'norm',index)
+		blocktext.position = Vector2(start*multiplier + 2,Ynak)
+		
+		
 	block.scale.x = duration * multiplier
+	blocktext.add_theme_color_override('font_color',Color(255,255,255,1))
 	add_child(block)
+	add_child(blocktext)
 	
 	
-	'''
-	var builder = $Builder
-	var block = Sprite2D.new()
-	block.texture = load('res://assets/block semidark.png')
-	block.position.x += 3.24 * 64
-	block.offset.x += 50
-	block.offset.y += 150
-	builder.add_child(block)
-	# 3.24
-	'''
+
 	pass
 
-func draw_lines(start,kyda):
+func draw_lines(start,kyda,index):
 	var pynktir = Sprite2D.new()
-	pynktir.texture = load('res://assets/пунктир.png')
+	pynktir.texture = load('res://assets/Sprite-0001.png')
 	pynktir.centered = false
-	if (kyda == 'otkaz'):
-		pynktir.position.x = start * multiplier
-		pynktir.position.y = 0
-	add_child(pynktir)
-	
-
-var a = [0.067, 0.444, 1.044, 1.438, 1.509, 3.033, 4.097, 5.244]
-var b = [3.633, 2.044, 4.219, 1.652, 0.791, 1.375, 6.36, 5.569]
+	# -------------
+	var linetext = Label.new()
+	linetext.text = str(start)
+	linetext.rotation = -1.57
+	linetext.add_theme_font_size_override('font_size',8)
+	linetext.add_theme_color_override('font_color',Color(0,0,0,1))
+	linetext.position = Vector2(start * multiplier-10, -2)
+	#add_child(linetext)
+	# -------------
+	var indextext = Label.new()
+	indextext.text = str(index)
+	indextext.add_theme_font_size_override('font_size',10)
+	indextext.add_theme_color_override('font_color',Color(0,0,0,1))
+	indextext.position = Vector2(start * multiplier, -2 + 3*104)
+	# -------------
+	if kyda == 'norm':
+		for i in range(1,4):
+			pynktir.position.y = -2 + i*104	
+			pynktir.position.x = start * multiplier
+			add_child(pynktir)
+			pynktir = Sprite2D.new()
+			pynktir.texture = load('res://assets/Sprite-0001.png')
+			pynktir.centered = false
+			indextext.position = Vector2(start * multiplier, -2 + 4*104)
+			add_child(indextext)
+	else:
+		add_child(linetext)
+		if kyda == 'proc':
+			pynktir.position.y = -2
+			pynktir.position.x = start * multiplier
+			add_child(pynktir)
+		elif kyda == 'otk':
+			for i in range(0,3):
+				pynktir.position.y = -2 + i*104	
+				pynktir.position.x = start * multiplier
+				add_child(pynktir)
+				pynktir = Sprite2D.new()
+				pynktir.texture = load('res://assets/Sprite-0001.png')
+				pynktir.centered = false
+			add_child(indextext)
+		elif kyda == 'nako':
+			for i in range(0,2):
+				pynktir.position.y = -2 + i*104	
+				pynktir.position.x = start * multiplier
+				add_child(pynktir)
+				pynktir = Sprite2D.new()
+				pynktir.texture = load('res://assets/Sprite-0001.png')
+				pynktir.centered = false
+		else:
+			pass
+			
+				
 
 func obrabotka(starts,duration):
 	zaebok = []
 	otkaz = []
+	proc_time = 0
 	var time_proc = 0.0
 	var zayavka_v_nak = []
 	var nak_busy = false
@@ -67,20 +121,20 @@ func obrabotka(starts,duration):
 		if starts[i] >= time_proc:
 			time_proc = starts[i] + duration[i]
 			# Функция постройки в проце
-			draw_block(starts[i],duration[i],'proc')
+			draw_block(starts[i],duration[i],'proc',i+1)
 			zaebok.append(i+1)
 		elif not nak_busy:
 			zayavka_v_nak = [time_proc,duration[i]]
 			# Функция постройки в накопителе
-			draw_block(starts[i],duration[i],'nako')
+			draw_block(starts[i],duration[i],'nako',i+1)
 			zaebok.append(i+1)
 			nak_busy = true
 		else:
 			# Функция постройки штриха
-			draw_lines(starts[i],'otkaz')
+			draw_lines(starts[i],'otk',i)
 			otkaz.append(i+1)
 	vremya_prostoya = starts[0] + (20-(zayavka_v_nak[0] + zayavka_v_nak[1]))
-	
+	podgryzInfo()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -89,18 +143,39 @@ func _ready():
 		var sekynda = Label.new()
 		sekynda.text = str(i)
 		sekynda.position.x = (i)*multiplier
-		sekynda.position.y = -20
-		sekynda.add_theme_color_override('font_color',Color(0,0,0,1))
+		sekynda.position.y = -42
+		sekynda.add_theme_color_override('font_color',Color(255,255,255,1))
 		add_child(sekynda)
+	var proctext = Label.new()
+	proctext.text = "Проц."
+	proctext.position = Vector2(-47,Yproc + 42.5 - 20)
+	proctext.add_theme_color_override('font_color',Color(0,0,0,1))
+	add_child(proctext)
+	var nako = Label.new()
+	nako.text = "Нак."
+	nako.position = Vector2(-47,Ynak + 42.5 - 20)
+	nako.add_theme_color_override('font_color',Color(0,0,0,1))
+	add_child(nako)
+	var otk = Label.new()
+	otk.text = "Отк."
+	otk.position = Vector2(-47,Yotk + 42.5 - 20)
+	otk.add_theme_color_override('font_color',Color(0,0,0,1))
+	add_child(otk)
+	var norm = Label.new()
+	norm.text = "Обр."
+	norm.position = Vector2(-47,Ygood + 42.5 - 20)
+	norm.add_theme_color_override('font_color',Color(0,0,0,1))
+	add_child(norm)
 		
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func podgryzInfo():
+	var info = get_tree().get_first_node_in_group('Info')
+	var text = info.get_child(0)
+	text.text = 'Заявок обработано: ' + str(zaebok.size()) \
+	+ '\nОбработаны: ' + str(zaebok) + '\nНеобработаны: ' \
+	+ str(otkaz) + '\nПроцессор бездействовал:\n' + str(vremya_prostoya) \
+	+ ' мс'
 	pass
 	
-	
 
-func _on_texture_button_pressed():
-	#draw_block(0.067,3.633,'proc')
-	obrabotka(a,b)

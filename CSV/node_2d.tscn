@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://f2xccal3oc1w"]
+[gd_scene load_steps=13 format=3 uid="uid://f2xccal3oc1w"]
 
 [ext_resource type="Texture2D" uid="uid://nwnpmesoai6b" path="res://assets/bg.png" id="1_2nd0d"]
 [ext_resource type="Script" path="res://node_2d.gd" id="1_ssrr6"]
@@ -8,13 +8,16 @@
 [ext_resource type="Texture2D" uid="uid://cqp213y7mxq8d" path="res://assets/button rectangle.png" id="5_clywc"]
 [ext_resource type="Texture2D" uid="uid://ckn6tbhv8gblr" path="res://assets/IOwindow.png" id="6_kwluk"]
 [ext_resource type="Texture2D" uid="uid://cpgw1t05hgun3" path="res://assets/button square.png" id="7_dnlfk"]
+[ext_resource type="Texture2D" uid="uid://743s06xxk4ib" path="res://assets/block semidark.png" id="7_fg8sm"]
 [ext_resource type="Texture2D" uid="uid://c0bvbweykmknh" path="res://assets/fliped IOwindow.png" id="8_mxo6d"]
+[ext_resource type="Texture2D" uid="uid://bwfdvbe0pax5f" path="res://assets/135135.png" id="10_imopb"]
 [ext_resource type="PackedScene" uid="uid://b6oeeycwykkph" path="res://risovalka.tscn" id="10_yh1mx"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ssrr6")
 
 [node name="--" type="Sprite2D" parent="."]
+z_index = -2
 position = Vector2(720, 250)
 scale = Vector2(10.4, 10)
 texture = ExtResource("1_2nd0d")
@@ -61,6 +64,7 @@ offset_right = 132.0
 offset_bottom = 242.0
 scale = Vector2(1.28, 1.12)
 texture_normal = ExtResource("5_clywc")
+texture_pressed = ExtResource("7_fg8sm")
 
 [node name="Label" type="Label" parent="ButtonLoad"]
 layout_mode = 0
@@ -78,6 +82,16 @@ offset_right = 132.0
 offset_bottom = 314.0
 scale = Vector2(1.28, 1.12)
 texture_normal = ExtResource("5_clywc")
+texture_pressed = ExtResource("7_fg8sm")
+
+[node name="Label" type="Label" parent="ButtonRandom"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 12
+text = "Сгенерировать"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Input1" type="Sprite2D" parent="."]
 position = Vector2(82, 92)
@@ -142,13 +156,42 @@ offset_right = 300.0
 offset_bottom = 316.0
 scale = Vector2(0.81, 0.81)
 texture_normal = ExtResource("7_dnlfk")
+texture_pressed = ExtResource("10_imopb")
 
-[node name="Info" type="Sprite2D" parent="."]
-position = Vector2(160, 412)
-scale = Vector2(1.70667, 1.36)
+[node name="Label" type="Label" parent="ButtonClear"]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 28
+text = "Сброс"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Info" type="Sprite2D" parent="." groups=["Info"]]
+position = Vector2(198.5, 412)
+scale = Vector2(2.22, 1.36)
 texture = ExtResource("8_mxo6d")
+
+[node name="infotext" type="Label" parent="Info"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -72.2973
+offset_top = -47.7941
+offset_right = -72.2973
+offset_bottom = -47.7941
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "Заявок обработано:
+Обработаны
+Необработаны:
+Процессор бездействовал:
+"
 
 [node name="risovalka" parent="." instance=ExtResource("10_yh1mx")]
 position = Vector2(447, 42)
 
 [connection signal="pressed" from="ButtonLoad" to="." method="_on_button_load_pressed"]
+[connection signal="pressed" from="ButtonRandom" to="." method="_on_button_random_pressed"]
+[connection signal="pressed" from="ButtonClear" to="." method="_on_button_clear_pressed"]
