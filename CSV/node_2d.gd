@@ -2,6 +2,9 @@ extends Node2D
 
 var arr1 = []
 var arr2 = []
+var times1 = []
+var times2 = []
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -22,18 +25,9 @@ func _on_button_load_pressed():
 	var res = proverka()
 
 	print(res)
-	function()
+	createArrFunction()
 	
-	'''
-	var builder = $Builder
-	var block = Sprite2D.new()
-	block.texture = load('res://assets/block semidark.png')
-	block.position.x += 3.24 * 64
-	block.offset.x += 50
-	block.offset.y += 150
-	builder.add_child(block)
-	# 3.24
-	'''
+
 	'''
 	Написать проверку введённых массивов на интовые числа, в каждом массиве
 	должно быть по 8 floatовских чисел
@@ -63,9 +57,6 @@ func proverka():
 
 func createGraph():
 
-	
-	
-	
 	pass
 	'''
 	Создается главный слой, который потом удаляется кнопкой стереть
@@ -80,7 +71,7 @@ func createGraph():
 func logariphm():
 	return (-1 * log(randf())) / 0.52
 
-func function():
+func createArrFunction():
 	arr1 = []
 	arr2 = []
 	for i in range(8):
