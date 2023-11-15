@@ -91,6 +91,7 @@ func draw_lines(start,kyda,index):
 				pynktir = Sprite2D.new()
 				pynktir.texture = load('res://assets/Sprite-0001.png')
 				pynktir.centered = false
+			indextext.text = str(index+1)
 			add_child(indextext)
 		elif kyda == 'nako':
 			for i in range(0,2):
@@ -129,11 +130,11 @@ func obrabotka(starts,duration):
 			draw_block(starts[i],duration[i],'nako',i+1)
 			zaebok.append(i+1)
 			nak_busy = true
-		else:
+		elif nak_busy and starts[i] not in zaebok:
 			# Функция постройки штриха
 			draw_lines(starts[i],'otk',i)
 			otkaz.append(i+1)
-	vremya_prostoya = starts[0] + (20-(zayavka_v_nak[0] + zayavka_v_nak[1]))
+	vremya_prostoya = starts[0] + (19-(zayavka_v_nak[0] + zayavka_v_nak[1]))
 	podgryzInfo()
 
 
@@ -175,7 +176,7 @@ func podgryzInfo():
 	text.text = 'Заявок обработано: ' + str(zaebok.size()) \
 	+ '\nОбработаны: ' + str(zaebok) + '\nНеобработаны: ' \
 	+ str(otkaz) + '\nПроцессор бездействовал:\n' + str(vremya_prostoya) \
-	+ ' мс'
+	+ 'с из 19с (' + str(snapped(vremya_prostoya/19 *100,0.1)) +'%).'
 	pass
 	
 
