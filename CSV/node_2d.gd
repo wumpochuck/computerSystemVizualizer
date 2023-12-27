@@ -100,7 +100,7 @@ func proverka():
 	return true
 
 func logariphm():
-	return (-1 * log(randf())) / 0.52
+	return (-1 * log(randf())) / 0.3
 
 func createArrFunction():
 	arr1 = []

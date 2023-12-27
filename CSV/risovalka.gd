@@ -137,7 +137,39 @@ func obrabotka(starts,duration):
 	vremya_prostoya = starts[0] + (19-(zayavka_v_nak[0] + zayavka_v_nak[1]))
 	podgryzInfo()
 
+'''
+func obrabotka(starts,duration):
+	zaebok = []
+	otkaz = []
+	proc_time = 0
+	var time_proc = 0.0
+	var zayavka_v_nak = []
+	var nak_busy = false
+	for i in range(8):
+		if zayavka_v_nak and starts[i] > time_proc:
+			time_proc = zayavka_v_nak[0] + zayavka_v_nak[1]
+			nak_busy = false
 
+
+		if starts[i] >= time_proc:
+			time_proc = starts[i] + duration[i]
+			# Функция постройки в проце
+			draw_block(starts[i],duration[i],'proc',i+1)
+			zaebok.append(i+1)
+			nak_busy = true
+		elif not nak_busy:
+			zayavka_v_nak = [time_proc,duration[i]]
+			# Функция постройки в накопителе
+			draw_block(starts[i],duration[i],'nako',i+1)
+			zaebok.append(i+1)
+			nak_busy = true
+		elif nak_busy and starts[i] not in zaebok:
+			# Функция постройки штриха
+			draw_lines(starts[i],'otk',i)
+			otkaz.append(i+1)
+	vremya_prostoya = 0#= starts[0] + (19-(zayavka_v_nak[0] + zayavka_v_nak[1]))
+	podgryzInfo()
+'''
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in range(20):
